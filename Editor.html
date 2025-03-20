@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editor de Texto</title>
+    <style>
+        body {
+            padding-right: 20px;
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #EEEEEE;
+            
+        }
+        #editor {
+            background-color: white;
+            width: 100%;
+            height: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            outline: none;
+            overflow-y: auto;
+        }
+        .toolbar{
+            width: 98.7%;
+            background-color: white;
+            padding: 20px;
+            border-radius: 5px;
+        }
+
+        .toolbar button {
+            margin-right: 5px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="toolbar">
+        <button onclick="document.execCommand('bold')"><b>Negrita</b></button>
+        <button onclick="document.execCommand('italic')"><i>Itálica</i></button>
+        <button onclick="document.execCommand('underline')"><u>Subrayado</u></button>
+        <button onclick="document.execCommand('strikeThrough')"><s>Tachado</s></button>
+        <button onclick="convertirMinusculas()">a minúsculas</button>
+        <button onclick="convertirMayusculas()">A MAYÚSCULAS</button>
+        <button onclick="document.execCommand('removeFormat')">Quitar formato</button>
+        <input type="text" id="searchText" placeholder="Buscar...">
+        <button onclick="buscarTexto()">Buscar</button>
+        <input type="text" id="replaceText" placeholder="Reemplazar con...">
+        <button onclick="reemplazarTexto()">Reemplazar</button>
+    </div>
+    <div id="editor" contenteditable="true"></div>
+    
+    <script>
+        function buscarTexto() {
+            let searchValue = document.getElementById("searchText").value;
+            let editor = document.getElementById("editor");
+            let content = editor.innerHTML;
+            
+            if (searchValue.trim() !== "") {
+                let regex = new RegExp(searchValue, "gi");
+                let highlighted = content.replace(regex, match => `<mark>${match}</mark>`);
+                editor.innerHTML = highlighted;
+            }
+        }
+
+        function reemplazarTexto() {
+            let searchValue = document.getElementById("searchText").value;
+            let replaceValue = document.getElementById("replaceText").value;
+            let editor = document.getElementById("editor");
+            let content = editor.innerHTML;
+            
+            if (searchValue.trim() !== "") {
+                let regex = new RegExp(searchValue, "gi");
+                let replaced = content.replace(regex, replaceValue);
+                editor.innerHTML = replaced;
+            }
+        }
+
+        function convertirMinusculas() {
+            let editor = document.getElementById("editor");
+            editor.innerHTML = editor.innerHTML.toLowerCase();
+        }
+
+        function convertirMayusculas() {
+            let editor = document.getElementById("editor");
+            editor.innerHTML = editor.innerHTML.toUpperCase();
+        }
+    </script>
+</body>
+</html>
