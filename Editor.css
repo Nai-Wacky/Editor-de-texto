@@ -24,4 +24,6 @@ body {
 .toolbar button {
     margin-right: 5px;
     border-radius: 5px;
+    background-color: blue;
+    color: white;
 }
